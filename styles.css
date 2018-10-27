@@ -1,0 +1,39 @@
+.keys {
+  display: grid;
+  grid-template-columns: 80px 80px 80px 80px;
+  grid-template-rows: 80px 80px 80px 80px 80px;
+  
+
+}
+
+
+.griditem {
+    border: 1px solid black;
+    background: #99d6ff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.display{
+    background: #e6e6e6;
+    width: 308px;
+    height: 80px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    font-size: 40px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    padding: 5px;
+}
+
+.container{
+margin: auto;
+width: 30%;
+}
+
+body {
+    background-color: #ffd699;
+}
