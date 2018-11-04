@@ -1,10 +1,11 @@
 //variables
 
 var display = document.getElementById('display');
+display.innerHTML = display.innerHTML.substring(0,300)
 
 var operator = ' ';
-var num1 = 5;
-var num2 = 6;
+var num1 = ' ';
+var num2 = ' ';
 var result = ' ';
 
 
@@ -17,6 +18,8 @@ let divide = (num1, num2) => Number(num1) / Number(num2);
 
 
 let operate = () => {
+result = ' ';
+display.textContent = ' ';
 switch(operator){
     case '+': result = add(num1,num2);
     break;
@@ -26,117 +29,68 @@ switch(operator){
     break;
     case '/': result = divide(num1,num2);
 }
-operator = ' ';
-display.textContent = result;
+//round decimal if over 7 digits
+if(result.toString().length >7){   
+    display.innerText = Number(result.toFixed(7));
+}
+else {
+display.textContent = Number(result);
+}
+num2= ' ';
+num1= ' ';
 };
 
-//add event listeners to all the buttons, update the display, update nums, update operator, make equals work
 
-document.getElementById("one").addEventListener("click", function() { 
+//add event listeners to all the buttons, update the display, and update nums,
+
+var buttons = document.getElementsByClassName('number');
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', numberKeys);
+}
+function numberKeys(){
     if (operator === ' '){
-        num1 += '1';
+        num1 += this.textContent;
+        console.log(operator);
+        console.log("num1= ",num1);
+        console.log("num2= ",num2);
         display.textContent = num1;
         } else if (operator !== ' '){
-        num2 += '1'
+        num2 +=this.textContent;
+        console.log(operator);
+        console.log("num1= ",num1);
+        console.log("num2= ",num2);
         display.textContent = num2;
         }
-    });
-document.getElementById("two").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '2';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '2'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("three").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '3';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '3'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("four").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '4';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '4'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("five").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '5';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '5'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("six").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '6';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '6'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("seven").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '7';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '7'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("eight").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '8';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '8'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("nine").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '9';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '9'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("zero").addEventListener("click", function(e) { 
-    if (operator === ' '){
-        num1 += '0';
-        display.textContent = num1;
-        } else if (operator !== ' '){
-        num2 += '0'
-        display.textContent = num2;
-        }
-    });
-document.getElementById("plus").addEventListener("click", function(e) { 
-    operator = '+';
-    display.textContent = '+'});
-document.getElementById("minus").addEventListener("click", function(e) { 
-    operator = '-';
-    display.textContent = '-'});
-document.getElementById("division").addEventListener("click", function(e) { 
-    operator = '/';
-    display.textContent = '/'});
-document.getElementById("multiply").addEventListener("click", function(e) { 
-    operator = '*';
-    display.textContent = '*'});
+}
+
+//adds event listeners to the operater keys and updates the operator aswell as assuring the you can perform multiple operations
+var keys = document.getElementsByClassName('operator');
+for (var i = 0; i < keys.length; i++) {
+    keys[i].addEventListener('click', operatorKeys);
+};
+
+function operatorKeys() {
+    if (num2 == ' '){
+    operator = this.textContent;
+    display.textContent = this.textContent;
+    console.log(operator);
+    console.log("num1= ",num1);
+    console.log("num2= ",num2);
+    } else if (num2 !== ' '){
+     operate()
+     display.textContent = result;
+     operator = this.textContent;
+     console.log(operator);
+     console.log("num1= ",num1);
+     console.log("num2= ",num2);
+     num1 = result;  
+    }
+};
+//clear and equals buttons
 document.getElementById("clear").addEventListener("click", function(e) { 
     num1 = ' ';
     num2 = ' ';
     operator = ' ';
-    display.textContent = ' '});
-document.getElementById("equals").addEventListener("click", operate);
+    display.textContent = ''});
+document.getElementById("equals").addEventListener("click", operate); 
+
