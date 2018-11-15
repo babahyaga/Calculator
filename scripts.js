@@ -60,6 +60,7 @@ function operatorKeys() {
     console.log(operator);
     console.log("num1= ",num1);
     console.log("num2= ",num2);
+    decimalon = 'off';
     } else if (num2 !== ' '){
      operate()
      display.textContent = result;
@@ -67,6 +68,7 @@ function operatorKeys() {
      console.log(operator);
      console.log("num1= ",num1);
      console.log("num2= ",num2);
+     decimalon = 'off'
      num1 = result;  
     }
 };
@@ -87,7 +89,7 @@ function numberKeys(){
         }
 }
 
-
+//THIS IS WHERE THE ERROR IS
 function addDecimal() {
     if (decimalon == 'on'){
         return;
@@ -97,12 +99,14 @@ function addDecimal() {
             num1 += '\.';
             display.textContent = num1;
             console.log("num1= ",num1);
+            return;
         } else {
             decimalon = 'off';
             num2 += '\.';
             decimalon = 'on';
             display.textContent = num2;
             console.log("num2= ",num2);
+            return;
         }
     }
 
@@ -127,6 +131,7 @@ document.getElementById("clear").addEventListener("click", function(e) {
     num1 = ' ';
     num2 = ' ';
     operator = ' ';
+    decimalon = ' ';
     display.textContent = ''});
 document.getElementById("equals").addEventListener("click", operate); 
 

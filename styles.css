@@ -11,6 +11,9 @@
 .number {
     background: #99d6ff;
 }
+#decimal {
+    background: #99d6ff;  
+}
 .reset {
     background: #0686ee;
 }
