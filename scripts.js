@@ -54,42 +54,35 @@ num1= ' ';
 
 
 function operatorKeys() {
+if  (num1 != ' '){
     if (num2 == ' '){
-    operator = this.textContent;
-    display.textContent = this.textContent;
-    console.log(operator);
-    console.log("num1= ",num1);
-    console.log("num2= ",num2);
-    decimalon = 'off';
-    } else if (num2 !== ' '){
-     operate()
-     display.textContent = result;
-     operator = this.textContent;
-     console.log(operator);
-     console.log("num1= ",num1);
-     console.log("num2= ",num2);
-     decimalon = 'off'
-     num1 = result;  
+        operator = this.textContent;
+        display.textContent = this.textContent;
+        decimalon = 'off';
+    }     
+    else if (num2 !== ' '){
+        operate()
+        display.textContent = result;
+        operator = this.textContent;
+        decimalon = 'off'
+        num1 = result;  
     }
+}
+else {
+    return;
+}
 };
 
 function numberKeys(){
     if (operator === ' '){
         num1 += this.textContent;
-        console.log(operator);
-        console.log("num1= ",num1);
-        console.log("num2= ",num2);
         display.textContent = num1;
         } else if (operator !== ' '){
-        num2 +=this.textContent;
-        console.log(operator);
-        console.log("num1= ",num1);
-        console.log("num2= ",num2);
+        num2 += this.textContent;
         display.textContent = num2;
         }
 }
 
-//THIS IS WHERE THE ERROR IS
 function addDecimal() {
     if (decimalon == 'on'){
         return;
@@ -119,14 +112,67 @@ for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', numberKeys);
 };
 
-//adds event listeners to the operater keys and updates the operator aswell as assuring the you can perform multiple operations
+//add keyboard functionality
+let keyboardPress = (event) => {
+    var key_press = event.key;
+    console.log(event.key);
+    console.log(key_press);
+ // Target each keypress and update the Display screen
+ if (['0','1','2','3','4','5','6','7','8','9'].includes(key_press)){
+    if (operator === ' '){
+        num1 += key_press;
+        display.textContent = num1;
+        } else if (operator !== ' '){
+        num2 += key_press;
+        display.textContent = num2;
+        }
+    }
+//update the operator
+else if (['+','/','-','*'].includes(key_press)){
+    if  (num1 != ' '){
+        if (num2 == ' '){
+            operator = key_press.textContent;
+            display.textContent = key_press.textContent;
+            decimalon = 'off';
+        }     
+        else if (num2 !== ' '){
+            operate()
+            display.textContent = result;
+            operator = key_press.textContent;
+            decimalon = 'off'
+            num1 = result;  
+        }
+    }
+    else {
+        return;
+    }
+    }
+else if (key_press = '=' ){
+    operate();
+}
+else if (key_press = 'Backspace'){
+    back();
+}
+
+else if (key_press = '.'){
+    addDecimal();
+}
+else {
+    return;
+}
+};
+
+window.addEventListener('keydown',keyboardPress);
+
+
+//adds event listeners to the operater keys and updates the operator 
 var keys = document.getElementsByClassName('operator');
 for (var i = 0; i < keys.length; i++) {
     keys[i].addEventListener('click', operatorKeys);
 };
 
 
-//clear and equals buttons
+//clear, decimal, and equals buttons
 document.getElementById("clear").addEventListener("click", function(e) { 
     num1 = ' ';
     num2 = ' ';
