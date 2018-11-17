@@ -1,3 +1,7 @@
+/* Javascript Basic Calculator
+A project by Stephen Lang 
+November 17th, 2018 */
+
 //variables
 
 var display = document.getElementById('display');
@@ -12,23 +16,29 @@ var decimal = document.getElementById('decimal');
 
 
 //functions
+
+//math operations
 let add = (num1, num2) => Number(num1) + Number(num2);
 let subtract = (num1, num2) => Number(num1) - Number(num2);
 let multiply = (num1, num2) => Number(num1) * Number(num2);
 let divide = (num1, num2) => Number(num1) / Number(num2);
 
 //clears nums depending on what point of the equation the user is pressing back
-let back = () => {if( num2 !== ' '){
+let back = () => {
+    if( num2 !== ' '){
     num2 = ' ';
     display.textContent = ' ';
-}else if (num1 !== ' ' && num2 == ' '){
+}
+else if (num1 !== ' ' && num2 == ' '){
     num1 = ' ';
     display.textContent = ' ';
-} else{
+} 
+else{
     return;
 }
 };
 
+//triggers calculation
 let operate = () => {
 result = ' ';
 display.textContent = ' ';
@@ -50,9 +60,10 @@ display.textContent = Number(result);
 }
 num2= ' ';
 num1= ' ';
+operator= ' ';
 };
 
-
+//picks up the operator and calcs if there are already 2 numbers
 function operatorKeys() {
 if  (num1 != ' '){
     if (num2 == ' '){
@@ -73,6 +84,7 @@ else {
 }
 };
 
+//picks up the numbers when clicked
 function numberKeys(){
     if (operator === ' '){
         num1 += this.textContent;
@@ -81,8 +93,9 @@ function numberKeys(){
         num2 += this.textContent;
         display.textContent = num2;
         }
-}
+};
 
+//flicks an on switch when decimal has been selected to prevent multiple decimals
 function addDecimal() {
     if (decimalon == 'on'){
         return;
@@ -104,19 +117,21 @@ function addDecimal() {
     }
 
 };
- 
-//add event listeners to all the buttons, update the display, and update nums,
-
-var buttons = document.getElementsByClassName('number');
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', numberKeys);
+//clears all
+function clear() { 
+    num1 = ' ';
+    num2 = ' ';
+    operator = ' ';
+    decimalon = ' ';
+    display.textContent = '';
 };
 
 //add keyboard functionality
 let keyboardPress = (event) => {
     var key_press = event.key;
     console.log(event.key);
-    console.log(key_press);
+  console.log(typeof(key_press));
+   console.log(event);
  // Target each keypress and update the Display screen
  if (['0','1','2','3','4','5','6','7','8','9'].includes(key_press)){
     if (operator === ' '){
@@ -127,18 +142,19 @@ let keyboardPress = (event) => {
         display.textContent = num2;
         }
     }
-//update the operator
-else if (['+','/','-','*'].includes(key_press)){
+//Target each operator and update the Display screen
+ else if (['+','/','-','*'].includes(key_press)){
+    console.log(operator);
     if  (num1 != ' '){
         if (num2 == ' '){
-            operator = key_press.textContent;
-            display.textContent = key_press.textContent;
+            operator = key_press;
+            display.textContent = key_press;
             decimalon = 'off';
         }     
         else if (num2 !== ' '){
             operate()
             display.textContent = result;
-            operator = key_press.textContent;
+            operator = key_press;
             decimalon = 'off'
             num1 = result;  
         }
@@ -147,41 +163,41 @@ else if (['+','/','-','*'].includes(key_press)){
         return;
     }
     }
-else if (key_press = '=' ){
+else if (key_press == '=' ){
     operate();
 }
-else if (key_press = 'Backspace'){
+else if (key_press == 'Backspace'){
     back();
 }
 
-else if (key_press = '.'){
+else if (key_press == '.'){
     addDecimal();
 }
-else {
-    return;
+else if (key_press == 'c'){
+    clear();
 }
+};
+
+//add event listeners 
+
+var buttons = document.getElementsByClassName('number');
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', numberKeys);
 };
 
 window.addEventListener('keydown',keyboardPress);
 
 
-//adds event listeners to the operater keys and updates the operator 
 var keys = document.getElementsByClassName('operator');
 for (var i = 0; i < keys.length; i++) {
     keys[i].addEventListener('click', operatorKeys);
 };
 
+document.getElementById("clear").addEventListener("click", clear);
 
-//clear, decimal, and equals buttons
-document.getElementById("clear").addEventListener("click", function(e) { 
-    num1 = ' ';
-    num2 = ' ';
-    operator = ' ';
-    decimalon = ' ';
-    display.textContent = ''});
 document.getElementById("equals").addEventListener("click", operate); 
 
-document.getElementById("back").addEventListener("click", back)
+document.getElementById("back").addEventListener("click", back);
 
-document.getElementById("decimal").addEventListener("click", addDecimal)
+document.getElementById("decimal").addEventListener("click", addDecimal);
 
